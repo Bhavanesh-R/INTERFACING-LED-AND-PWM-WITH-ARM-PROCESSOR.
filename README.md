@@ -1,7 +1,7 @@
 # INTERFACING LED AND PWM, WITH LPC1768 ARM PROCESSOR.
 
 # AIM:    
-   To write an embedded c program to interface LED and PWM with ARM processor          LPC1768
+   To write an embedded c program to interface LED and PWM with ARM processor LPC1768.
           
 # COMPONENTS REQUIRED:
 ##  HARDWARE:
@@ -53,19 +53,54 @@ Header:
  delay.h, gpio.h, pwm.h, stdulils.h
 
 # PIN DIAGRAM :
+<img width="619" height="369" alt="image" src="https://github.com/user-attachments/assets/8325680d-263b-44bf-8368-217b5f2c488b" />
 
 
 # CIRCUIT DIAGRAM:
  
- 
-# PROGRAM:
+ <img width="1071" height="542" alt="image" src="https://github.com/user-attachments/assets/62069100-0a7f-4597-8cf8-3519636cfcc9" />
 
+# PROGRAM:
+```
+#include <lpc17xx.h>
+#include "pwm.h"
+#include "delay.h"
+#define CYCLE_TIME 100
+/* start the main program */
+int main()
+{
+int dutyCycle;
+SystemInit(); /* Clock and PLL configuration */
+PWM_Init(CYCLE_TIME); /* Initialize the PWM module and the Cycle time(Ton+Toff) is
+set to 255(similar to arduino)*/
+PWM_Start(PWM_3); /* Enable PWM output on PWM_1-PWM_4 (P2_0 - P2_3) */
+while(1)
+{
+for(dutyCycle=0;dutyCycle<CYCLE_TIME;dutyCycle++) /* Increase the Brightness of the
+Leds */
+{
+PWM_SetDutyCycle(PWM_3,dutyCycle); //P2_2
+DELAY_ms(10);
+}
+17
+for(dutyCycle=CYCLE_TIME;dutyCycle>0;dutyCycle--) /* Decrease the Brightness of the
+Leds */
+{
+PWM_SetDutyCycle(PWM_3,dutyCycle); //P2_2
+DELAY_ms(10);
+}
+}
+}
+```
 
  
 # Output:
 
 
+<img width="756" height="519" alt="image" src="https://github.com/user-attachments/assets/aa483cce-cec5-4933-b4ee-7be0a2ff1481" />
 
+# Result:
+Thus the embedded c program to interface LED and PWM with ARM processor LPC1768 is verified.
 
 
 
